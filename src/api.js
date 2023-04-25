@@ -1,7 +1,6 @@
-// @@ -0,0 +1,150 @@
-// import chalk from "chalk";
+import chalk from "chalk";
 
-// console.log(chalk.blue("Hello world!"));
+console.log(chalk.blue("Hello world!"));
 import fs from "fs";
 import path from "path";
 import fetch from "node-fetch";
@@ -131,7 +130,7 @@ const validater = (arr) =>
     })
   )
 
-// console.log("Existe una ruta?".bgGreen,existPath("./src/example.md"))
+console.log("Existe una ruta?",existPath("./src/example.md"))
 // console.log("Es una ruta absoluta?".bgMagenta,isAbs("./src/example.md"))
 // console.log("cambia la ruta a absoluta".bgBlue,changeRoute('./src/example.md'))
 // console.log("Si es un archivo nos mostrara la extension".bgWhite,hasExt('./src/example.md'))
@@ -145,6 +144,6 @@ const validater = (arr) =>
 //   getProp("./src/example.md")
 // );
 // const prop=getProp();
-// console.log("preoo",prop)
+//console.log("preoo",prop)
 
-  validater(getProp("./readme.md")).then((val) => console.log(val))
+ // validater(getProp("./readme.md")).then((val) => console.log(val))
