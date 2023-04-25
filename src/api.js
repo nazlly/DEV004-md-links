@@ -1,6 +1,6 @@
-import chalk from "chalk";
+// import chalk from "chalk";
 
-console.log(chalk.blue("Hello world!"));
+// console.log(chalk.blue("Hello world!"));
 import fs from "fs";
 import path from "path";
 import fetch from "node-fetch";
@@ -23,115 +23,115 @@ const readDir = (route) => fs.readdirSync(route, "utf-8");
 //Si es un directorio tendremos que unir el directorio con su base
 const joinRoute = (dir, base) => path.join(dir, base);
 
-//Validar si es archivo o directorio
-const hasExt = (route) => {
-  if (path.parse(route).ext !== "") {
-    const typeFile = path.parse(route).ext;
-    //retornamos la extensión del archivo
-    return typeFile;
-  } else {
-    //Es un directorio
-    return false;
-  }
-};
+// //Validar si es archivo o directorio
+// const hasExt = (route) => {
+//   if (path.parse(route).ext !== "") {
+//     const typeFile = path.parse(route).ext;
+//     //retornamos la extensión del archivo
+//     return typeFile;
+//   } else {
+//     //Es un directorio
+//     return false;
+//   }
+// };
 
-// ------API-----
+// // ------API-----
 
-const getMdFiles = (path) => {
-  let mdFiles = [];
-  if (existPath(path)) {
-    const pathAbs = changeRoute(path);
-    const typeFile = hasExt(pathAbs);
-    if (typeFile) {
-      if (typeFile === ".md") {
-        mdFiles = mdFiles.concat(pathAbs);
-        return mdFiles;
-      } else {
-        return "No es un archivo markdown";
-      }
-    } else {
-      const contDir = readDir(pathAbs);
-      contDir.forEach((file) => {
-        const unitePath = joinRoute(pathAbs, file);
-        const recursiveFunct = getMdFiles(unitePath);
-        mdFiles = mdFiles.concat(recursiveFunct);
-      });
-      return mdFiles.length !== 0 ? mdFiles : "Directorio Vacio";
-    }
-  } else {
-    return "Ruta inexistente";
-  }
-};
+// const getMdFiles = (path) => {
+//   let mdFiles = [];
+//   if (existPath(path)) {
+//     const pathAbs = changeRoute(path);
+//     const typeFile = hasExt(pathAbs);
+//     if (typeFile) {
+//       if (typeFile === ".md") {
+//         mdFiles = mdFiles.concat(pathAbs);
+//         return mdFiles;
+//       } else {
+//         return "No es un archivo markdown";
+//       }
+//     } else {
+//       const contDir = readDir(pathAbs);
+//       contDir.forEach((file) => {
+//         const unitePath = joinRoute(pathAbs, file);
+//         const recursiveFunct = getMdFiles(unitePath);
+//         mdFiles = mdFiles.concat(recursiveFunct);
+//       });
+//       return mdFiles.length !== 0 ? mdFiles : "Directorio Vacio";
+//     }
+//   } else {
+//     return "Ruta inexistente";
+//   }
+// };
 
-//Para encontrar el url, nombre de url, y nombre + url usaremos expresiones regulares (Regex)
-const linkRegex = /https?:\/\/(www\.)?[A-z\d]+(\.[A-z]+)*(\/[A-z\?=&-\d]*)*/g;
-const nameRegex = /\[[^\s]+(.+?)\]/gi;
-const nameLinkRegex = /\[(.+?)\]\((https?.+?)\)/g;
+// //Para encontrar el url, nombre de url, y nombre + url usaremos expresiones regulares (Regex)
+// const linkRegex = /https?:\/\/(www\.)?[A-z\d]+(\.[A-z]+)*(\/[A-z\?=&-\d]*)*/g;
+// const nameRegex = /\[[^\s]+(.+?)\]/gi;
+// const nameLinkRegex = /\[(.+?)\]\((https?.+?)\)/g;
 
-//Conseguir las propiedades de los links en un array
+// //Conseguir las propiedades de los links en un array
 
-const getProp = (path) => {
-  const arrayProp = [];
-  const justMdFiles = getMdFiles(path).filter(
-    (a) => a !== "No es un archivo markdown" && a !== "Directorio Vacio"
-  );
-  justMdFiles.forEach((mdFiles) => {
-    const contFile = readArch(mdFiles);
-    const matchLinks = contFile.match(nameLinkRegex);
-    if (matchLinks) {
-      matchLinks.forEach((link) => {
-        const href = link.match(linkRegex).join();
-        const text = link.match(nameRegex).join().slice(1, -1);
-        arrayProp.push({
-          href,
-          text,
-          file: mdFiles,
-        });
-      });
-      return arrayProp;
-    } else {
-      //En el caso que hayan null
-      arrayProp.push({
-        href: "Los archivos no contienen links",
-        text: "",
-        file: mdFiles,
-      });
-      return arrayProp;
-    }
-  });
-  return arrayProp;
-};
+// const getProp = (path) => {
+//   const arrayProp = [];
+//   const justMdFiles = getMdFiles(path).filter(
+//     (a) => a !== "No es un archivo markdown" && a !== "Directorio Vacio"
+//   );
+//   justMdFiles.forEach((mdFiles) => {
+//     const contFile = readArch(mdFiles);
+//     const matchLinks = contFile.match(nameLinkRegex);
+//     if (matchLinks) {
+//       matchLinks.forEach((link) => {
+//         const href = link.match(linkRegex).join();
+//         const text = link.match(nameRegex).join().slice(1, -1);
+//         arrayProp.push({
+//           href,
+//           text,
+//           file: mdFiles,
+//         });
+//       });
+//       return arrayProp;
+//     } else {
+//       //En el caso que hayan null
+//       arrayProp.push({
+//         href: "Los archivos no contienen links",
+//         text: "",
+//         file: mdFiles,
+//       });
+//       return arrayProp;
+//     }
+//   });
+//   return arrayProp;
+// };
 
-// colocar el status que tiene los links,usaremos fetch para realizar la promesa
-const validater = (arr) =>
-  Promise.all(
-    arr.map((obj) => {
-      return fetch(obj.href)
-        .then((res) => {
-          const fetchProp = {
-            href: obj.href,
-            text: obj.text,
-            file: obj.file,
-            status: res.status,
-            message: res.ok ? "OK" : "FAIL",
-          };
-          return fetchProp;
-        })
-        .catch(() => {
-          const fetchProp = {
-            href: obj.href,
-            text: obj.text,
-            file: obj.file,
-            status:400,
-            message: "FAIL",
-          };
-          return fetchProp;
-        });
-    })
-  )
+// // colocar el status que tiene los links,usaremos fetch para realizar la promesa
+// const validater = (arr) =>
+//   Promise.all(
+//     arr.map((obj) => {
+//       return fetch(obj.href)
+//         .then((res) => {
+//           const fetchProp = {
+//             href: obj.href,
+//             text: obj.text,
+//             file: obj.file,
+//             status: res.status,
+//             message: res.ok ? "OK" : "FAIL",
+//           };
+//           return fetchProp;
+//         })
+//         .catch(() => {
+//           const fetchProp = {
+//             href: obj.href,
+//             text: obj.text,
+//             file: obj.file,
+//             status:400,
+//             message: "FAIL",
+//           };
+//           return fetchProp;
+//         });
+//     })
+//   )
 
 console.log("Existe una ruta?",existPath("./src/example.md"))
-// console.log("Es una ruta absoluta?".bgMagenta,isAbs("./src/example.md"))
+console.log("Es una ruta absoluta?",isAbs("./src/example.md"))
 // console.log("cambia la ruta a absoluta".bgBlue,changeRoute('./src/example.md'))
 // console.log("Si es un archivo nos mostrara la extension".bgWhite,hasExt('./src/example.md'))
 // console.log("1. muestra file md?".bgCyan,getMdFiles('./src'))
