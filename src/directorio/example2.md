@@ -1,1 +1,0 @@
-hola es la hora de aprender!
