@@ -16,7 +16,8 @@ describe("isAbs", () => {
 
 describe("changeRoute", () => {
   it("Debería cambiar una ruta relativa a una ruta absoluta", () => {
-    const pathAbs = "C:\\Users\\nazlly\\OneDrive\\Desktop\\proyectos\\DEV004-md-links\\src\\example.md";
+    const pathAbs =
+      "C:\\Users\\nazlly\\OneDrive\\Desktop\\proyectos\\DEV004-md-links\\src\\example.md";
     expect(api.changeRoute("./src/example.md")).toBe(pathAbs);
   });
 });
@@ -27,7 +28,7 @@ describe("readArch", () => {
     const apiReadArch = api.readArch("./src/example2.md");
     return apiReadArch.then((res) => {
       expect(res).toBe("laboratoria");
-    })
+    });
   });
   it("Debería darnos un error", () => {
     const apiReadArch = api.readArch("./src/example34.md");
@@ -79,7 +80,9 @@ describe("getMdFiles", () => {
 
   it("Debería devolvernos 'Directorio vacio' ", () => {
     const result = api.getMdFiles("vacio");
-    expect(result).toStrictEqual("No se encontro la ruta indicada.Por favor revisar");
+    expect(result).toStrictEqual(
+      "No se encontro la ruta indicada.Por favor revisar"
+    );
   });
 
   it("Debería devolvernos archivos .md del directorio", () => {
@@ -94,7 +97,9 @@ describe("getMdFiles", () => {
 
   it("Debería decirnos que No se encontro la ruta indicada", () => {
     const result = api.getMdFiles("./src/directorio/exampled4.txt");
-    expect(result).toStrictEqual("No se encontro la ruta indicada.Por favor revisar");
+    expect(result).toStrictEqual(
+      "No se encontro la ruta indicada.Por favor revisar"
+    );
   });
 });
 
@@ -108,7 +113,6 @@ describe("justMdFiles", () => {
   });
 });
 
-
 describe("getPropertiesFiles", () => {
   it("Deberia devolver las propiedades de los links que tiene el archivo", () => {
     const getProp = api.getPropertiesFiles("./src/example.md");
@@ -118,8 +122,8 @@ describe("getPropertiesFiles", () => {
         text: "Array.prototype.sort() - MDN",
         file: "./src/example.md",
         lines: [
-          "* [Array.prototype.sort() - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)",,
-          "  ",
+          "* [Array.prototype.sort() - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)\r",
+          " ",
         ],
       },
     ];
@@ -166,12 +170,12 @@ describe("validater", () => {
   it("Debería validar si el link no funciona ", () => {
     const result = [
       {
-        href: 'https://nodejs.org/api/fs',
-        text: 'File system - Documentación oficial (en inglés)',
-        file: './src/direct/ex.md',
-        status: 'Fail Request failed with status code 404',
+        href: "https://nodejs.org/api/fs",
+        text: "File system - Documentación oficial (en inglés)",
+        file: "./src/direct/ex.md",
+        status: "Fail Request failed with status code 404",
         lines: [1],
-        message: 'FAIL'
+        message: "FAIL",
       },
     ];
     return api.getPropertiesFiles("./src/direct/ex.md").then((res) => {
@@ -182,165 +186,161 @@ describe("validater", () => {
   });
 });
 
-// describe( , () => {
-//   it( , () => { expect().toBe()});
-// });
-
 describe("MD-Links", () => {
-  it("Debería mostrar el error de una ruta que no existe", () => { 
-    const mdL = index.mdLinks("./src/vacfio", { validate: false });
-    const resultado = index.colors.bgRed("No se encontro la ruta indicada.Por favor revisar");
+  it("Debería mostrar el error de una ruta que no existe", () => {
+    const mdL = index.mdLinks("./src/vacio", { validate: false });
+    const resultado = index.colors.bgRed(
+      "No se encontro la ruta indicada.Por favor revisar"
+    );
     return mdL.catch((res) => {
-      expect(res).toStrictEqual(resultado)
-    })
+      expect(res).toStrictEqual(resultado);
+    });
   });
 
-  it("Debería hacer uso de md links sin petición HTTP, usando false", () => { 
+  it("Debería hacer uso de md links sin petición HTTP, usando false", () => {
     const mdL = index.mdLinks("./src/example.md", { validate: false });
     const resultado = [
       {
-        href: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort',
-        text: 'Array.prototype.sort() - MDN',
-        file: './src/example.md',
+        href: "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort",
+        text: "Array.prototype.sort() - MDN",
+        file: "./src/example.md",
         lines: [
-          '* [Array.prototype.sort() - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)\r',
-          '  '
-        ]
-      }
-    ]
+          "* [Array.prototype.sort() - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)\r",
+          " ",
+        ],
+      },
+    ];
     return mdL.then((res) => {
-      expect(res).toStrictEqual(resultado)
-    })
+      expect(res).toStrictEqual(resultado);
+    });
   });
 
-  it("Debería hacer una peticion en HTTP con true", () => { 
+  it("Debería hacer una peticion en HTTP con true", () => {
     const mdL = index.mdLinks("./src/example.md", { validate: true });
     const resultado = [
       {
-        href: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort',
-        text: 'Array.prototype.sort() - MDN',
-        file: './src/example.md',
+        href: "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort",
+        text: "Array.prototype.sort() - MDN",
+        file: "./src/example.md",
         status: 200,
         lines: [1],
-        message: 'OK'
-      }
-    ]
+        message: "OK",
+      },
+    ];
     return mdL.then((res) => {
-      expect(res).toStrictEqual(resultado)
-    })
+      expect(res).toStrictEqual(resultado);
+    });
   });
 
-  it("Debería mostrarnos que sucede si dejamos vacio options", () => { 
-    const mdL = index.mdLinks("./src/example.md", { });
+  it("Debería mostrarnos que sucede si dejamos vacio options", () => {
+    const mdL = index.mdLinks("./src/example.md", {});
     const resultado = [
       {
-        href: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort',
-        text: 'Array.prototype.sort() - MDN',
-        file: './src/example.md',
+        href: "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort",
+        text: "Array.prototype.sort() - MDN",
+        file: "./src/example.md",
         lines: [
-          '* [Array.prototype.sort() - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)\r',
-          '  '
-        ]
-      }
-    ]
+          "* [Array.prototype.sort() - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)\r",
+          " ",
+        ],
+      },
+    ];
     return mdL.then((res) => {
-      expect(res).toStrictEqual(resultado)
-    })
+      expect(res).toStrictEqual(resultado);
+    });
   });
 
-  it("Debería mostrarnos que no existe el archivo", () => { 
+  it("Debería mostrarnos que no existe el archivo", () => {
     const mdL = index.mdLinks("./src/vacio", { validate: true });
-    const resultado = index.colors.bgRed("No se encontro la ruta indicada.Por favor revisar");
+    const resultado = index.colors.bgRed(
+      "No se encontro la ruta indicada.Por favor revisar"
+    );
     return mdL.catch((res) => {
-      expect(res).toStrictEqual(resultado)
-    })
+      expect(res).toStrictEqual(resultado);
+    });
   });
 });
 
 describe("statsTotal", () => {
-  it("Cantidad de links", () => { 
+  it("Cantidad de links", () => {
     const link = [
       {
-        href: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort',
-        text: 'Array.prototype.sort() - MDN',
-        file: './src/example.md',
+        href: "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort",
+        text: "Array.prototype.sort() - MDN",
+        file: "./src/example.md",
         lines: [
-          '* [Array.prototype.sort() - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)\r',
-          '  '
-        ]
-      }
-    ]
-    const stats = index.statsTotal(link)
-    expect(stats).toBe(1) 
+          "* [Array.prototype.sort() - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)\r",
+          "  ",
+        ],
+      },
+    ];
+    const stats = index.statsTotal(link);
+    expect(stats).toBe(1);
   });
 });
 
-// describe( , () => {
-//   it( , () => { expect().toBe()});
-// });
-
 describe("bronkenStats", () => {
-  it("Debería decirnos cuantos links estan rotos", () => { 
+  it("Debería decirnos cuantos links estan rotos", () => {
     const link = [
       {
-        href: 'http://community.laboratoria.la/t/modulos-librerias-paquetes-frameworks-cual-es-la-diferencia/175',
-        text: 'Módulos, librerías, paquetes, frameworks... ¿cuál ',
-        file: 'readme.md',
-        status: 'Fail getaddrinfo ENOTFOUND community.laboratoria.la',
+        href: "http://community.laboratoria.la/t/modulos-librerias-paquetes-frameworks-cual-es-la-diferencia/175",
+        text: "Módulos, librerías, paquetes, frameworks... ¿cuál ",
+        file: "readme.md",
+        status: "Fail getaddrinfo ENOTFOUND community.laboratoria.la",
         lines: [509],
-        message: 'FAIL'
+        message: "FAIL",
       },
       {
-        href: 'https://carlosazaustre.es/manejando-la-asincronia-en-javascript',
-        text: 'Asíncronía en js',
-        file: 'readme.md',
+        href: "https://carlosazaustre.es/manejando-la-asincronia-en-javascript",
+        text: "Asíncronía en js",
+        file: "readme.md",
         status: 200,
         lines: [510],
-        message: 'OK'
+        message: "OK",
       },
-    ]
-    const bronkenStats = index.bronkenStats(link)
-    expect(bronkenStats).toBe(1) 
+    ];
+    const bronkenStats = index.bronkenStats(link);
+    expect(bronkenStats).toBe(1);
   });
 });
 
 describe("uniqueStats", () => {
-  it("Debería decirnos cuantos links unicos hay", () => { 
+  it("Debería decirnos cuantos links unicos hay", () => {
     const link = [
       {
-        href: 'http://community.laboratoria.la/t/modulos-librerias-paquetes-frameworks-cual-es-la-diferencia/175',
-        text: 'Módulos, librerías, paquetes, frameworks... ¿cuál ',
-        file: 'readme.md',
-        status: 'Fail getaddrinfo ENOTFOUND community.laboratoria.la',
+        href: "http://community.laboratoria.la/t/modulos-librerias-paquetes-frameworks-cual-es-la-diferencia/175",
+        text: "Módulos, librerías, paquetes, frameworks... ¿cuál ",
+        file: "readme.md",
+        status: "Fail getaddrinfo ENOTFOUND community.laboratoria.la",
         lines: [509],
-        message: 'FAIL'
+        message: "FAIL",
       },
       {
-        href: 'https://carlosazaustre.es/manejando-la-asincronia-en-javascript',
-        text: 'Asíncronía en js',
-        file: 'readme.md',
+        href: "https://carlosazaustre.es/manejando-la-asincronia-en-javascript",
+        text: "Asíncronía en js",
+        file: "readme.md",
         status: 200,
         lines: [510],
-        message: 'OK'
+        message: "OK",
       },
       {
-        href: 'http://community.laboratoria.la/t/modulos-librerias-paquetes-frameworks-cual-es-la-diferencia/175',
-        text: 'Módulos, librerías, paquetes, frameworks... ¿cuál ',
-        file: 'readme.md',
-        status: 'Fail getaddrinfo ENOTFOUND community.laboratoria.la',
+        href: "http://community.laboratoria.la/t/modulos-librerias-paquetes-frameworks-cual-es-la-diferencia/175",
+        text: "Módulos, librerías, paquetes, frameworks... ¿cuál ",
+        file: "readme.md",
+        status: "Fail getaddrinfo ENOTFOUND community.laboratoria.la",
         lines: [509],
-        message: 'FAIL'
+        message: "FAIL",
       },
       {
-        href: 'https://carlosazaustre.es/manejando-la-asincronia-en-javascript',
-        text: 'Asíncronía en js',
-        file: 'readme.md',
+        href: "https://carlosazaustre.es/manejando-la-asincronia-en-javascript",
+        text: "Asíncronía en js",
+        file: "readme.md",
         status: 200,
         lines: [510],
-        message: 'OK'
+        message: "OK",
       },
-    ]
-    const bronkenStats = index.uniqueStats(link)
-    expect(bronkenStats).toBe(2) 
+    ];
+    const bronkenStats = index.uniqueStats(link);
+    expect(bronkenStats).toBe(2);
   });
 });

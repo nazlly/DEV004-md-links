@@ -8,7 +8,10 @@ const mdLinks = (path, options = {}) => {
       reject(colors.bgRed("No se encontro la ruta indicada.Por favor revisar"));
     } else {
       if (!options.validate) {
-        if (api.getMdFiles(path) !== "No se encontro la ruta indicada.Por favor revisar") {
+        if (
+          api.getMdFiles(path) !==
+          "No se encontro la ruta indicada.Por favor revisar"
+        ) {
           api
             .getPropertiesFiles(path)
             .then((res) => {
@@ -17,9 +20,12 @@ const mdLinks = (path, options = {}) => {
             .catch((err) => {
               reject(err);
             });
-        } 
+        }
       } else {
-        if (api.getMdFiles(path) !== "No se encontro la ruta indicada.Por favor revisar") {
+        if (
+          api.getMdFiles(path) !==
+          "No se encontro la ruta indicada.Por favor revisar"
+        ) {
           api
             .getPropertiesFiles(path)
             .then((res) => {
@@ -31,7 +37,7 @@ const mdLinks = (path, options = {}) => {
             .catch((err) => {
               reject(err);
             });
-        } 
+        }
       }
     }
   });
@@ -48,9 +54,9 @@ const bronkenStats = (links) => {
   const brokenLinks = links.filter((link) => link.message === "FAIL");
   return brokenLinks.length;
 };
-// Cantidad de links unicos 
+// Cantidad de links unicos
 // Set no permite valores repetidos
-// usaremos "..." para descomponer los elementos del set 
+// usaremos "..." para descomponer los elementos del set
 const uniqueStats = (links) => {
   const uniqueLinks = [...new Set(links.map((link) => link.href))];
   return uniqueLinks.length;
@@ -70,5 +76,5 @@ module.exports = {
   statsTotal,
   uniqueStats,
   bronkenStats,
-  colors
+  colors,
 };
