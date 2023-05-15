@@ -21,7 +21,7 @@ const readArch = (route) =>
   new Promise((resolve, reject) => {
     fs.readFile(route, "utf-8", (err, data) => {
       if (err) {
-        reject(colors.bgRed("No se puede leer el archivo"));
+        reject(colors.bgBrightRed("No se puede leer el archivo"));
       } else {
         resolve(data);
       }

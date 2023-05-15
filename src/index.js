@@ -5,7 +5,7 @@ const mdLinks = (path, options = {}) => {
   return new Promise((resolve, reject) => {
     if (!api.existFile(path)) {
       // eslint-disable-next-line prefer-promise-reject-errors
-      reject(colors.bgRed("No se encontro la ruta indicada.Por favor revisar"));
+      reject(colors.bgBrightRed("No se encontro la ruta indicada.Por favor revisar"));
     } else {
       if (!options.validate) {
         if (
@@ -29,7 +29,7 @@ const mdLinks = (path, options = {}) => {
           api
             .getPropertiesFiles(path)
             .then((res) => {
-              console.log(colors.bgBlue("Cargando links"));
+              console.log(colors.bgBrightMagenta("Cargando links"));
               api.validater(res).then((val) => {
                 resolve(val);
               });

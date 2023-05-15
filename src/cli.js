@@ -14,7 +14,7 @@ const path = proc.argv[2];
 
 // No se coloca path
 if (proc.argv[2] === undefined) {
-  console.log(colors.bgMagenta("Por favor ingresar una ruta y/o escribir '--help'"));
+  console.log(colors.rainbow("Por favor ingresar una ruta y/o escribir '--help'"));
 } else if (proc.argv[3] === undefined) {
   mdLinks(path, { validate: false })
     .then((res) => {
@@ -28,14 +28,12 @@ if (proc.argv[2] === undefined) {
 // No sabe que option colocar
 if (proc.argv[2] === "--help") {
   console.log(
-    colors.bgYellow(
-      `"Puedes usar las siguientes opciones para validar los links de tu(s) archivo(s):
-      --validate: Revisa si tu link funciona o no, 
-      --stats: Te dará la cantidad total de links y cantidad de links unicos,
-      --validate--stats: Te dará la cantidad total de links,cantidad de links unicos y cantidad de links rotos"`
-    )
-  );
-} else {
+          `${colors.america('Puedes usar las siguientes opciones para validar los links de tu(s) archivo(s):')}
+           ${colors.bgBrightCyan.bold('   "--validate"     ')} ${colors.italic('Te mostrará los enlaces con su estado ok o fail.')}
+           ${colors.bgBrightGreen.bold('   "--stats"       ')} ${colors.italic('Te mostrará las estadísticas de enlaces totales y únicos.')}
+           ${colors.bgBrightMagenta.bold('   "--validate --stats" ')} ${colors.italic('Te mostrará las estadísticas de enlaces totales, únicos y rotos.')}`);
+
+   } else {
   mdLinks(path, { validate: true })
     .then((res) => {
       const total = `Total: ${statsTotal(res)}`;
@@ -44,11 +42,12 @@ if (proc.argv[2] === "--help") {
       const option1 = proc.argv[4] === "--stats" && proc.argv[3] === "--validate";
       const option2 = proc.argv[4] === "--validate" && proc.argv[3] === "--stats";
       const option3 = proc.argv[3] === "--validate" && proc.argv[4] === undefined;
-      
+
       if (option1 || option2) {
-        console.log(`${total}\n${unique}\n${broken}`);
+        console.log(
+          `${colors.cyan.bold(total)}\n${colors.magenta.bold(unique)}\n${colors.green.bold(broken)}`);
       } else if (proc.argv[3] === "--stats") {
-        console.log(`${total}\n${unique}`);
+        console.log(`${colors.cyan.bold(total)}\n${colors.blue.bold(unique)}`);
       } else if (option3) {
         console.log(res);
       } else {
