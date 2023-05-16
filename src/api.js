@@ -28,15 +28,6 @@ const readArch = (route) =>
     });
   });
 
-// const result = readArch("./src/example2.md");
-// result
-//   .then((res) => {
-//     console.log(res);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
-
 // Leer contenido del directorio --> array
 const readDirectory = (route) => fs.readdirSync(route, "utf-8");
 

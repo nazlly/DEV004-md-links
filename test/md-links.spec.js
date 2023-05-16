@@ -33,7 +33,7 @@ describe("readArch", () => {
   it("Debería darnos un error", () => {
     const apiReadArch = api.readArch("./src/example34.md");
     return apiReadArch.catch((err) => {
-      expect(err).toBe(index.colors.bgRed("No se puede leer el archivo"));
+      expect(err).toBe(index.colors.bgBrightRed("No se puede leer el archivo"));
     });
   });
 });
@@ -189,7 +189,7 @@ describe("validater", () => {
 describe("MD-Links", () => {
   it("Debería mostrar el error de una ruta que no existe", () => {
     const mdL = index.mdLinks("./src/vacio", { validate: false });
-    const resultado = index.colors.bgRed(
+    const resultado = index.colors.bgBrightRed(
       "No se encontro la ruta indicada.Por favor revisar"
     );
     return mdL.catch((res) => {
@@ -252,7 +252,7 @@ describe("MD-Links", () => {
 
   it("Debería mostrarnos que no existe el archivo", () => {
     const mdL = index.mdLinks("./src/vacio", { validate: true });
-    const resultado = index.colors.bgRed(
+    const resultado = index.colors.bgBrightRed(
       "No se encontro la ruta indicada.Por favor revisar"
     );
     return mdL.catch((res) => {
